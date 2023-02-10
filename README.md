@@ -13,10 +13,10 @@ $ ./block
    - [mingw-w64-clang-x86_64-toolchain](https://packages.msys2.org/groups/mingw-w64-clang-x86_64-toolchain)
    - [mingw-w64-clang-x86_64-ncurses](https://packages.msys2.org/package/mingw-w64-clang-x86_64-ncurses?repo=clang64)
    ```bash
-   $ CFLAGS="-DWINDOWS" make all
+   $ CFLAGS="-DWINDOWS" mingw32-make all
    ```
 2. Windowsの環境変数の設定でPATHにC:\msys64\clang64\bin\を追加します  
 3. コマンドプロンプトやダブルクリックでblock.exeを実行するとゲームが始まります
 ## 既知のバグ
 - Windows上では速度が想定より遅くなる  
-  正確な原因はわかりませんが､winpthreadsのnanosleep関数の実装のバグな気がします
+  正確な原因はわかりませんが､sleep周りでライブラリ関数がバグってる気がします
