@@ -10,7 +10,6 @@ game.o: game.c
 main.o: main.c
 
 %.o: %.c
-	echo "On Windows, add -DWINDOWS to CFLAGS"
 	$(CC) $(CFLAGS) -c $<
 
 block: buffer.o window.o screen.o common.o game.o main.o
