@@ -13,7 +13,7 @@ $ ./block
    - [mingw-w64-clang-x86_64-toolchain](https://packages.msys2.org/groups/mingw-w64-clang-x86_64-toolchain)
    - [mingw-w64-clang-x86_64-ncurses](https://packages.msys2.org/package/mingw-w64-clang-x86_64-ncurses?repo=clang64)
    ```bash
-   $ CFLAGS="-DWINDOWS" mingw32-make all
+   $ CFLAGS="-DWINDOWS -DNCURSES_STATIC" mingw32-make all
    ```
 2. Windowsの環境変数の設定でPATHにC:\msys64\clang64\bin\を追加します  
 3. コマンドプロンプトやダブルクリックでblock.exeを実行するとゲームが始まります

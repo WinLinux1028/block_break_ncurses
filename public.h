@@ -9,7 +9,7 @@
 #include <time.h>
 
 #ifdef WINDOWS
-#include <ncursesw/ncurses.h>
+#include <ncurses/ncurses.h>
 #else
 #include <ncurses.h>
 #endif
