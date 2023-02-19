@@ -14,11 +14,11 @@ typedef struct
     Ball ball;
 } GameSession;
 
-u8 execute(GameSession *session, Screen *scr);
+u8 next_frame(GameSession *session, Screen *scr);
 u8 collision_detection(GameSession *session, Screen *scr);
 void game_event(GameSession *session, Screen *scr, u8 state);
 
-void game(Screen *scr)
+void game_init(Screen *scr)
 {
     srand((unsigned int)time(NULL));
 
@@ -60,7 +60,7 @@ void game(Screen *scr)
             struct timespec start;
             timespec_get(&start, TIME_UTC);
 
-            u8 state = execute(&session, scr);
+            u8 state = next_frame(&session, scr);
             if (state != 0)
             {
                 remove_window(scr, session.player);
@@ -89,7 +89,7 @@ void game(Screen *scr)
     }
 }
 
-u8 execute(GameSession *session, Screen *scr)
+u8 next_frame(GameSession *session, Screen *scr)
 {
     int key = getch();
     switch (key)
@@ -232,31 +232,21 @@ void game_event(GameSession *session, Screen *scr, u8 state)
                "   ##    #    #   #  #   ### #         #       #     #      #   #  ####       #   #    #####  #     # #         #       #     #      #####  #  ##  #   #   #    #   #  ##   ## #         ##   #  #     #      #   #  #   #  ####    #   #     #  #####  #####      ####   ##### ##### #     # #    #                                                                                                                                                  ",
                438);
     }
+
+    isize stop_x = (scr->rows_len - art_1->buf.rows_len) / 2;
     move_window(art_1, scr->rows_len + 1, 0);
-    move_window(art_2, -art_2->buf.rows_len - 1, art_1->y + art_1->buf.lines_len);
+    move_window(art_2, 2 * stop_x - art_1->x, art_1->y + art_1->buf.lines_len);
 
     struct timespec wait_time;
     wait_time.tv_sec = 0;
-    wait_time.tv_nsec = 1.0 / (art_1->x - (scr->rows_len - art_1->buf.rows_len) / 2) * 1000000000.0;
-    while (1)
+    wait_time.tv_nsec = 1000000000.0 / (art_1->x - stop_x);
+    while (art_1->x != stop_x)
     {
         struct timespec start;
         timespec_get(&start, TIME_UTC);
 
-        u8 flag1 = art_1->x != (scr->rows_len - art_1->buf.rows_len) / 2;
-        u8 flag2 = art_2->x != (scr->rows_len - art_2->buf.rows_len) / 2;
-        if (!(flag1 || flag2))
-        {
-            break;
-        }
-        if (flag1)
-        {
-            art_1->x -= 1;
-        }
-        if (flag2)
-        {
-            art_2->x += 1;
-        }
+        art_1->x -= 1;
+        art_2->x += 1;
         draw_screen(scr);
 
         struct timespec stop;

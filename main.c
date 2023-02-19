@@ -15,7 +15,7 @@ int main(void)
         switch (title(&scr))
         {
         case 0:
-            game(&scr);
+            game_init(&scr);
             break;
         case 1:
             drop_screen(&scr);

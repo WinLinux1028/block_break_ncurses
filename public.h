@@ -17,7 +17,7 @@
 extern struct timespec add_time(struct timespec *x, struct timespec *y);
 extern struct timespec sub_time(struct timespec *x, struct timespec *y);
 
-extern void game(Screen *scr);
+extern void game_init(Screen *scr);
 
 typedef struct
 {

@@ -4,6 +4,7 @@ all: block
 
 main.o: main.c
 game.o: game.c
+game_object.o: game_object.c
 common.o: common.c
 screen.o: screen/screen.c
 window.o: screen/window.c
@@ -12,7 +13,7 @@ buffer.o: screen/buffer.c
 %.o: %.c
 	$(CC) $(CFLAGS) -c $<
 
-block: main.o game.o common.o screen.o window.o buffer.o
+block: main.o game.o game_object.o common.o screen.o window.o buffer.o
 	$(CC) $(CFLAGS) $^ -lncurses -lm -pthread -o block
 
 clean:
