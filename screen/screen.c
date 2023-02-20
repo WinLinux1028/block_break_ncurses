@@ -36,35 +36,33 @@ void remove_window(Screen *scr, Window *win)
 void draw_screen(Screen *scr)
 {
     erase();
+
+    isize raw_scr_rows_len;
+    isize raw_scr_lines_len;
+    getmaxyx(stdscr, raw_scr_lines_len, raw_scr_rows_len);
+    usize scr_x = (raw_scr_rows_len - scr->rows_len) / 2;
+    usize scr_y = (raw_scr_lines_len - scr->lines_len) / 2;
+
     for (Window *win = scr->wins.first; win != NULL; win = win->next)
     {
-
-        usize start_y;
-        if (win->y < 0)
-        {
-            start_y = win->y * (-1);
-        }
-        else
-        {
-            start_y = 0;
-        }
-
-        usize start_x;
+        usize win_start_x = 0;
         if (win->x < 0)
         {
-            start_x = win->x * (-1);
-        }
-        else
-        {
-            start_x = 0;
+            win_start_x = -win->x;
         }
 
-        for (usize j = start_y; j < win->buf.lines_len && j + win->y < scr->lines_len; j++)
+        usize win_start_y = 0;
+        if (win->y < 0)
         {
-            move(win->y + j, win->x + start_x);
-            for (usize k = start_x; k < win->buf.rows_len && k + win->x < scr->rows_len; k++)
+            win_start_y = -win->y;
+        }
+
+        for (usize y = win_start_y; y < win->buf.lines_len && y + win->y < scr->lines_len; y++)
+        {
+            move(scr_y + win->y + y, scr_x + win->x + win_start_x);
+            for (usize x = win_start_x; x < win->buf.rows_len && x + win->x < scr->rows_len; x++)
             {
-                addch(*unsafe_get_cell(&win->buf, k, j));
+                addch(*unsafe_get_cell(&win->buf, x, y));
             }
         }
     }
