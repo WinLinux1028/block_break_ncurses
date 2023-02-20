@@ -27,6 +27,7 @@ int main(void)
 
 i8 title(Screen *scr)
 {
+    timeout(-1);
     Window *logo = add_window(scr, 70, 13);
     memcpy(
         logo->buf.buf,
@@ -58,7 +59,6 @@ i8 title(Screen *scr)
     move_window(menu, (scr->rows_len - menu->buf.rows_len) / 2, (scr->lines_len + logo->buf.lines_len - menu->buf.lines_len) / 2);
 
     i8 cursor_pos = 0;
-    timeout(-1);
     while (1)
     {
         char *cursor = get_cell(&menu->buf, 0, cursor_pos);

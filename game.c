@@ -259,9 +259,9 @@ void game_event(GameSession *session, Screen *scr, u8 state)
     Window *msg = add_window(scr, 24, 1);
     memcpy(msg->buf.buf, "Press enter to continue.", 24);
     move_window(msg, (scr->rows_len - msg->buf.rows_len) / 2, (scr->lines_len + art_1->buf.lines_len + art_2->buf.lines_len - msg->buf.lines_len) / 2);
-    draw_screen(scr);
     while (1)
     {
+        draw_screen(scr);
         if (getch() == '\n')
         {
             break;
